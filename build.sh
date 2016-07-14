@@ -35,6 +35,11 @@ mkdir installed
 mkdir -p out
 TARGETDIR=$TOOL2_DIR/installed
 
+##########################
+echo -n 'kerboros: .......'
+(cd krb5-1.14.2/src \
+  && ./configure --prefix=$TARGETDIR --enable-static --enable-shared=no \
+  && make clean && make -j8 && make install) >& out/krb.out && pass || fail
 
 ##########################
 echo -n 'boost: ..........'
@@ -46,6 +51,10 @@ echo -n 'boost: ..........'
 ##########################
 echo -n 'libxml2: ........'
 (cd libxml2-2.9.4 \
-  && ./configure --prefix=$TARGETDIR --without-python \
+  && ./configure --prefix=$TARGETDIR --without-python --enable-shared=no \
   && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
+
+##########################
+echo -n 'rm *.so: ........'
+(cd $MY_TOOLCHAIN_DIR/installed/lib && rm -f *.so *.so.*) && pass || fail
 
