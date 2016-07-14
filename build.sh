@@ -37,6 +37,13 @@ TARGETDIR=$TOOL2_DIR/installed
 
 
 ##########################
+echo -n 'boost: ..........'
+(cd boost_1_61_0 \
+  && ./bootstrap.sh --with-python=no --prefix=$TARGETDIR \
+  && ./b2 install) >& out/boost.out && pass || fail
+
+
+##########################
 echo -n 'libxml2: ........'
 (cd libxml2-2.9.4 \
   && ./configure --prefix=$TARGETDIR --without-python \
