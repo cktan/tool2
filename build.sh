@@ -36,6 +36,20 @@ mkdir -p out
 TARGETDIR=$TOOL2_DIR/installed
 
 ##########################
+echo -n 'libgsasl: .......'
+(cd libgsasl-1.8.0 \
+  && ./configure --prefix=$TARGETDIR --enable-static --enable-shared=no \
+  && make clean && make -j8 && make install) >& out/libgsasl.out && pass || fail
+
+
+##########################
+echo -n 'libuuid: ........'
+(cd libuuid-1.0.3 \
+  && ./configure --prefix=$TARGETDIR --enable-static --enable-shared=no \
+  && make clean && make -j8 && make install) >& out/libuuid.out && pass || fail
+
+
+##########################
 echo -n 'kerboros: .......'
 (cd krb5-1.14.2/src \
   && ./configure --prefix=$TARGETDIR --enable-static --enable-shared=no \
@@ -56,5 +70,5 @@ echo -n 'libxml2: ........'
 
 ##########################
 echo -n 'rm *.so: ........'
-(cd $MY_TOOLCHAIN_DIR/installed/lib && rm -f *.so *.so.*) && pass || fail
+(cd $TARGETDIR/lib && rm -f *.so *.so.*) && pass || fail
 
