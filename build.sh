@@ -56,10 +56,10 @@ echo -n 'kerboros: .......'
   && make clean && make -j8 && make install) >& out/krb.out && pass || fail
 
 ##########################
-echo -n 'boost: ..........'
-(cd boost_1_61_0 \
-  && ./bootstrap.sh --with-python=no --prefix=$TARGETDIR \
-  && ./b2 install) >& out/boost.out && pass || fail
+#echo -n 'boost: ..........'
+#(cd boost_1_61_0 \
+#  && ./bootstrap.sh --with-python=no --prefix=$TARGETDIR \
+#  && ./b2 install) >& out/boost.out && pass || fail
 
 
 ##########################
@@ -67,6 +67,14 @@ echo -n 'libxml2: ........'
 (cd libxml2-2.9.4 \
   && ./configure --prefix=$TARGETDIR --without-python --enable-shared=no \
   && make clean && make -j8 && make install) >& out/libxml2.out && pass || fail
+
+
+##########################
+echo -n 'libhdfs3: .......'
+(cd pivotalrd-libhdfs3 \
+  && rm -rf build && mkdir build && cd build \
+  && ../bootstrap --prefix=$TARGETDIR --dependency=$TARGETDIR \
+  && make clean && make -j8 && make install) >& out/libhdfs3.out && pass || fail
 
 ##########################
 echo -n 'rm *.so: ........'
