@@ -71,7 +71,7 @@ echo -n 'libxml2: ........'
 
 ##########################
 echo -n 'libhdfs3: .......'
-(cd pivotalrd-libhdfs3 \
+(cd libhdfs3 \
   && rm -rf build && mkdir build && cd build \
   && ../bootstrap --prefix=$TARGETDIR --dependency=$TARGETDIR \
   && make clean && make -j8 && make install) >& out/libhdfs3.out && pass || fail
