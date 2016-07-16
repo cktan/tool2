@@ -1,3 +1,4 @@
+
 CXXFILES = DataTransferProtocolSender.cpp \
 	DirectoryIterator.cpp \
 	FileSystem.cpp \
@@ -22,19 +23,8 @@ CXXFILES = DataTransferProtocolSender.cpp \
 	Token.cpp \
 	UserInfo.cpp
 
-OBJ = $(CXXFILES:.cpp=.o)
+OBJS = $(CXXFILES:.cpp=.o)
 
-CXXFLAGS += -I/home/cktan/p/tool2/installed/include 
-CXXFLAGS += -I/home/cktan/p/tool2/installed/include/libxml2
-CXXFLAGS += -I../common -I.. -I../proto
-CXXFLAGS += -Wall -msse4.2 -std=c++11 -g 
-CXXFLAGS += -O0 
-#CXXFLAGS += -O2 -g -DNDEBUG 
+include ../src.mk
 
-
-all: $(OBJ)
-
-
-clean: 
-	rm -f *.o 
 

@@ -1,10 +1,15 @@
 .NOTPARALLEL:
 
-DIRS = proto server client 
+DIRS = proto common server client network rpc
 BUILDDIRS = $(DIRS:%=build-%)
 CLEANDIRS = $(DIRS:%=clean-%)
+SUBOBJS = proto/subobj.o common/subobj.o server/subobj.o \
+	client/subobj.o network/subobj.o rpc/subobj.o
 
-all: $(BUILDDIRS)
+all: libhdfs3.a
+
+libhdfs3.a: $(BUILDDIRS)
+	ar -rv $@ $(SUBOBJS)
 
 $(DIRS): $(BUILDDIRS)
 

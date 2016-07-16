@@ -1,3 +1,4 @@
+
 GENCXX = ClientDatanodeProtocol.pb.cc \
 	ClientNamenodeProtocol.pb.cc \
 	datatransfer.pb.cc \
@@ -8,13 +9,11 @@ GENCXX = ClientDatanodeProtocol.pb.cc \
 	Security.pb.cc
 
 GENH = $(GENCXX:.cc=.h)
-GEN = $(GENCXX) $(GENH)
-
-
-all: $(GEN)
-
-clean:
-	rm -f $(GEN) *.o
+GENFILES = $(GENCXX) $(GENH)
+OBJS = $(GENCXX:.cc=.o)
 
 %.pb.cc %.pb.h: ../proto/%.proto
 	protoc -I../proto --cpp_out=. $<
+
+include ../src.mk
+
