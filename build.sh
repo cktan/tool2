@@ -56,6 +56,7 @@ echo -n 'kerboros: .......'
   && make clean && make -j8 && make install) >& out/krb.out && pass || fail
 
 ##########################
+# DON'T NEED THIS SHIT
 #echo -n 'boost: ..........'
 #(cd boost_1_61_0 \
 #  && ./bootstrap.sh --with-python=no --prefix=$TARGETDIR \
@@ -71,10 +72,14 @@ echo -n 'libxml2: ........'
 
 ##########################
 echo -n 'libhdfs3: .......'
-(cd libhdfs3 \
-  && rm -rf build && mkdir build && cd build \
-  && ../bootstrap --prefix=$TARGETDIR --dependency=$TARGETDIR \
-  && make clean && make -j8 && make install) >& out/libhdfs3.out && pass || fail
+#(cd libhdfs3 \
+#  && rm -rf build && mkdir build && cd build \
+#  && ../bootstrap --prefix=$TARGETDIR --dependency=$TARGETDIR \
+#  && make clean && make -j8 && make install) >& out/libhdfs3.out && pass || fail
+# Use good old Makefiles
+( (cd libhdfs3/src && make clean && make -j8) \
+	&& cp libhdfs3/src/libhdfs3.a installed/lib/ \
+	&& cp libhdfs3/src/client/hdfs.h installed/include/ ) >& out/libhdfs3.out && pass || fail
 
 ##########################
 echo -n 'rm *.so: ........'
