@@ -45,6 +45,8 @@
 
 #define PATH_SEPRATOR '/'
 inline static const char * SkipPathPrefix(const char * path) {
+    // CK: bad code!!! 
+    // failed when path is "" or when path has no '/' char
     int i, len = strlen(path);
 
     for (i = len - 1; i > 0; --i) {
@@ -52,6 +54,9 @@ inline static const char * SkipPathPrefix(const char * path) {
             break;
         }
     }
+    // CK: add this to remedy the cases above
+    if (i <= 0)
+	return path;
 
     assert(i > 0 && i < len);
     return path + i + 1;

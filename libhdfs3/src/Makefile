@@ -9,7 +9,7 @@ SUBOBJS = proto/subobj.o common/subobj.o server/subobj.o \
 all: libhdfs3.a
 
 libhdfs3.a: $(BUILDDIRS)
-	ar -rv $@ $(SUBOBJS)
+	ar -rcs $@ $(SUBOBJS)
 
 $(DIRS): $(BUILDDIRS)
 
@@ -17,6 +17,7 @@ $(BUILDDIRS):
 	$(MAKE) -C $(@:build-%=%)
 
 clean: $(CLEANDIRS)
+	rm libhdfs3.a 
 
 $(CLEANDIRS):
 	$(MAKE) -C $(@:clean-%=%) clean
