@@ -23,10 +23,12 @@ function fail
    if [ $1 ]; then echo $*; fi
 }
 
+##########################
+(cd xdrive >& /dev/null) || fatal 'please symlink xdrive'
 
 
 ##########################
-[ "$MY_TOOL2_DIR" == "$TOOL2_DIR" ]  || fatal "please set TOOL2_DIR to this $DIR"
+[ "$MY_TOOL2_DIR" == "$TOOL2_DIR" ]  || fatal "please set TOOL2_DIR to this: $DIR"
 
 
 ##########################
@@ -80,6 +82,13 @@ echo -n 'libhdfs3: .......'
 ( (cd libhdfs3/src && make clean && make -j8) \
 	&& cp libhdfs3/src/libhdfs3.a installed/lib/ \
 	&& cp libhdfs3/src/client/hdfs.h installed/include/ ) >& out/libhdfs3.out && pass || fail
+
+##########################
+echo -n 'xdrive: .........'
+( (cd xdrive && make clean && make -j8) \
+	&& cp xdrive/client/xdrclnt.h installed/include/ \
+	&& cp xdrive/server/xdrive installed/bin/ \
+	&& cp xdrive/client/libxdrive.a installed/lib ) >& out/xdrive.out && pass || fail
 
 ##########################
 echo -n 'rm *.so: ........'
