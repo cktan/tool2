@@ -17,7 +17,7 @@ $(BUILDDIRS):
 	$(MAKE) -C $(@:build-%=%)
 
 clean: $(CLEANDIRS)
-	rm libhdfs3.a 
+	rm -f libhdfs3.a 
 
 $(CLEANDIRS):
 	$(MAKE) -C $(@:clean-%=%) clean
