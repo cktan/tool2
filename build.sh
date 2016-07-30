@@ -26,12 +26,28 @@ function fail
 (cd xdrive >& /dev/null) || fatal 'please symlink xdrive'
 
 
-
 ##########################
 rm -rf installed
 mkdir installed
 mkdir -p out
 TARGETDIR=$DIR/installed
+export PATH="$TARGETDIR/bin:$PATH"
+export PKG_CONFIG_PATH="$TARGETDIR/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+
+##########################
+echo -n 'protobuf: .......'
+(cd protobuf-3.0.0 \
+	&& ./autogen.sh \
+	&& ./configure --prefix=$TARGETDIR \
+	&& make clean && make -j8 \
+	&& make install) >& out/protobuf.out && pass || fail
+
+##########################
+echo -n 'grpc: .......'
+(cd grpc && make clean \
+	&& make -j8 prefix=$TARGETDIR \
+	&& make prefix=$TARGETDIR install) >& out/grpc.out && pass || fail
 
 ##########################
 echo -n 'libgsasl: .......'
