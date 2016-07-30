@@ -1,7 +1,6 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-MY_TOOL2_DIR=$DIR
 
 function fatal
 {
@@ -27,15 +26,12 @@ function fail
 (cd xdrive >& /dev/null) || fatal 'please symlink xdrive'
 
 
-##########################
-[ "$MY_TOOL2_DIR" == "$TOOL2_DIR" ]  || fatal "please set TOOL2_DIR to this: $DIR"
-
 
 ##########################
 rm -rf installed
 mkdir installed
 mkdir -p out
-TARGETDIR=$TOOL2_DIR/installed
+TARGETDIR=$DIR/installed
 
 ##########################
 echo -n 'libgsasl: .......'
@@ -86,7 +82,8 @@ echo -n 'libhdfs3: .......'
 ##########################
 echo -n 'xdrive: .........'
 ( (cd xdrive && make clean && make -j8) \
-	&& cp xdrive/client/xdrclnt.h installed/include/ \
+	&& mkdir -p installed/include/xdrive \
+	&& cp xdrive/client/xdrclnt.h installed/include/xdrive/ \
 	&& cp xdrive/server/xdrive installed/bin/ \
 	&& cp xdrive/client/libxdrive.a installed/lib ) >& out/xdrive.out && pass || fail
 
